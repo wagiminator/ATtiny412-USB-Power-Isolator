@@ -124,8 +124,18 @@ int main(void) {
 - Navigate to the folder with the makefile and the sketch.
 - Run `DEVICE=attiny412 PROGRMR=serialupdi PORT=/dev/ttyUSB0 make install` to compile, burn the fuses and upload the firmware (change DEVICE, PROGRMR and PORT accordingly).
 
-# Performance
+# Characteristics
+
+|Parameter|Value|
+|:-|:-|
+|Input Voltage|4.5 - 5.5V|
+|Output Voltage|4.7 - 5.5V|
+|Output Voltage Ripple|100mVpp@100mA|
+|Output Current|max 1000mA|
+|Power Line Isolation|2500V|
+
 ![perf1.png](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_perf1.png)
+![scope1.jpg](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_scope1.jpg)
 
 # References, Links and Notes
 1. [ATtiny412 Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny212-214-412-414-416-DataSheet-DS40002287A.pdf)
