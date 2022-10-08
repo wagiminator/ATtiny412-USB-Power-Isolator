@@ -25,7 +25,7 @@ When Q2 conducts, Q1 goes high-impedance and the voltage polarities at the prima
 ## Transformer Selection
 The choice of a suitable center-tapped transformer essentially depends on the input voltage, the output voltage, the current and the switching frequency.
 
-To prevent a transformer from saturating, its V-t product must be greater than the maximum V-t product applied by the device. The maximum voltage supplied by the device is the nominal input voltage (here $V_{IN} = 5V$) plus 10%. The maximum time ($T_{max}$) during which this voltage is applied to the primary winding is half the period of the switching frequency (here $f_{SW} = 400kHz$). Therefore, the minimum V-t product of the transformer is determined by:
+To prevent a transformer from saturating, its V-t product must be greater than the maximum V-t product applied by the device. The maximum voltage supplied by the device is the nominal input voltage (here $V_{IN} = 5V$) plus 10%. The maximum time $T_{max}$ during which this voltage is applied to the primary winding is half the period of the switching frequency (here $f_{SW} = 400kHz$). Therefore, the minimum V-t product of the transformer is determined by:
 
 $$Vt_{min} = 1.1 \times V_{IN} \times \frac{T_{max}}{2} = \frac{1.1 \times V_{IN}}{2 \times f_{SW}} = \frac{5.5V}{800kHz} = 6.875Vμs$$
 
@@ -33,7 +33,7 @@ Common V-t values ​​for low-power, center-tapped transformers range from 22 
 
 Although V-t-wise all of these transformers can be driven by the device, other important factors such as isolation voltage, transformer rating and turns ratio must be considered before making the final decision. To calculate the turns ratio of the transformer, the efficiency of the transformer, the desired output voltage, the voltage drop at the diodes and the MOSFETs as well as the dropout voltage of the linear regulator that may be connected downstream are important.
 
-The 1N5817 Schottky diodes used here have a voltage drop of $V_F = 450mV$, the AO3400A MOSFETs have an on-resistance of $R_{DS(ON)} = 32mΩ$ and the desired output voltage is $V_{OUT} = 5V$. Now the minimum turns ratio $n_{min}$ of the transformer can be calculated that will allow the push-pull converter to operate correctly over the specified current range (here $I_{max} = 1A$). This minimum turns ratio is expressed as the ratio of minimum secondary to minimum primary voltage multiplied by a correction factor that takes into account the typical 97% transformer efficiency ($η = 0.97$):
+The 1N5817 Schottky diodes used here have a voltage drop of $V_F = 450mV$, the AO3400A MOSFETs have an on-resistance of $R_{DS(ON)} = 32mΩ$ and the desired output voltage is $V_{OUT} = 5V$. Now the minimum turns ratio $n_{min}$ of the transformer can be calculated that will allow the push-pull converter to operate correctly over the specified current range (here $I_{max} = 1A$). This minimum turns ratio is expressed as the ratio of minimum secondary to minimum primary voltage multiplied by a correction factor that takes into account the typical 97% transformer efficiency $η = 0.97$:
 
 $$n_{min} = \frac{1}{η} \times \frac{V_{OUT} + V_F}{V_{IN} - R_{DS(ON)} \times I_{max}} = \frac{1}{0.97} \times \frac{5V + 0.45V}{5V - 0.032Ω \times 1A} = 1.13$$
 
