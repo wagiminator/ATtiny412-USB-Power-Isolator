@@ -27,7 +27,7 @@ The choice of a suitable center-tapped transformer essentially depends on the in
 
 To prevent a transformer from saturating, its V-t product must be greater than the maximum V-t product applied by the device. The maximum voltage supplied by the device is the nominal input voltage (here $V_{IN} = 5V$) plus 10%. The maximum time ($T_{max}$) during which this voltage is applied to the primary winding is half the period of the switching frequency (here $f_{SW} = 400kHz$). Therefore, the minimum V-t product of the transformer is determined by:
 
-(1) $$Vt_{min} = 1.1 \times V_{IN} \times \frac{T_{max}}{2} = \frac{1.1 \times V_{IN}}{2 \times f_{SW}} = \frac{5.5V}{800kHz} = 6.875Vμs$$
+$$Vt_{min} = 1.1 \times V_{IN} \times \frac{T_{max}}{2} = \frac{1.1 \times V_{IN}}{2 \times f_{SW}} = \frac{5.5V}{800kHz} = 6.875Vμs$$
 
 Common V-t values ​​for low-power, center-tapped transformers range from 22 Vμs to 150 Vμs in typical 10mm x 12mm footprints. However, transformers specifically designed for PCMCIA applications only deliver 11 Vμs and have a significantly reduced footprint of just 6mm x 6mm. According to the data sheet, the WE750315371 transformer used here has a V-t product of 8.6Vμs for bipolar operation.
 
@@ -35,7 +35,7 @@ Although V-t-wise all of these transformers can be driven by the device, other i
 
 The 1N5817 Schottky diodes used here have a voltage drop of $V_F = 450mV$, the AO3400A MOSFETs have an on-resistance of $R_{DS(ON)} = 32mΩ$ and the desired output voltage is $V_{OUT} = 5V$. Now the minimum turns ratio $n_{min}$ of the transformer can be calculated that will allow the push-pull converter to operate correctly over the specified current range (here $I_{max} = 1A$). This minimum turns ratio is expressed as the ratio of minimum secondary to minimum primary voltage multiplied by a correction factor that takes into account the typical 97% transformer efficiency ($η = 0.97$):
 
-(2) $n_{min} = \frac{1}{η} \times \frac{V_{OUT} + V_F}{V_{IN} - R_{DS(ON)} \times I_{max}} = \frac{1}{0.97} \times \frac{5V + 0.45V}{5V - 0.032Ω \times 1A} = 1.13$
+$$n_{min} = \frac{1}{η} \times \frac{V_{OUT} + V_F}{V_{IN} - R_{DS(ON)} \times I_{max}} = \frac{1}{0.97} \times \frac{5V + 0.45V}{5V - 0.032Ω \times 1A} = 1.13$$
 
 The WE750315371 transformer used here has a turns ratio of 1.1 (±2%), so that fits.
 
@@ -71,13 +71,13 @@ The values of the registers CMPASET and CMPBSET determine the length of the resp
 
 A dead time of $T_{DEAD} = 100ns$ each is sufficient and also corresponds to the values of the SN6505B. According to the data sheet, a switching frequency of $f_{SW} = 400kHz$ is intended for the Würth Elektronik 750315371 transformer. Since the TCD works with a clock frequency of $f_{TCD} = 20MHz$, the following register values are calculated:
 
-(3) $T_{SW} = \frac{1}{f_{SW}} = \frac{1}{400000Hz} = 2500ns$
+$$T_{SW} = \frac{1}{f_{SW}} = \frac{1}{400000Hz} = 2500ns$$
 
-(4) $T_{ON} = \frac{T_{SW}}{2} - T_{DEAD} = \frac{2500ns}{2} - 100ns = 1150ns$
+$$T_{ON} = \frac{T_{SW}}{2} - T_{DEAD} = \frac{2500ns}{2} - 100ns = 1150ns$$
 
-(5) $CMPASET = CMPBSET = T_{DEAD} \times f_{TCD} - 1 = 0.0000001s \times 20000000Hz - 1 = 1$
+$$CMPASET = CMPBSET = T_{DEAD} \times f_{TCD} - 1 = 0.0000001s \times 20000000Hz - 1 = 1$$
 
-(6) $CMPACLR = CMPBCLR = T_{ON} \times f_{TCD} - 1 = 0.00000115s \times 20000000Hz - 1 = 22$
+$$CMPACLR = CMPBCLR = T_{ON} \times f_{TCD} - 1 = 0.00000115s \times 20000000Hz - 1 = 22$$
 
 The main function of the firmware is thus as follows:
 
