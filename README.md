@@ -131,7 +131,9 @@ int main(void) {
 1. [ATtiny412 Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/ATtiny212-214-412-414-416-DataSheet-DS40002287A.pdf)
 2. [SN6505B Datasheet](https://www.ti.com/lit/ds/symlink/sn6505b-q1.pdf)
 3. [WE750315371 Datasheet](https://katalog.we-online.com/ctm/datasheet/750315371.pdf)
-4. [ADuM3160 USB Isolator](https://github.com/wagiminator/ADuM3160-USB-Isolator)
+4. [AO3400A Datasheet](http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf)
+5. [1N5817 Datasheet](https://www.vishay.com/docs/88525/1n5817.pdf)
+6. [ADuM3160 USB Isolator](https://github.com/wagiminator/ADuM3160-USB-Isolator)
 
 ![pic2.jpg](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_pic2.jpg)
 
