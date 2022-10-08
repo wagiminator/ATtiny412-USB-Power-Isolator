@@ -132,6 +132,7 @@ int main(void) {
 |Output Voltage|4.7 - 5.5V|
 |Output Voltage Ripple|100mVpp@100mA|
 |Output Current|max 1000mA|
+|Efficiency|max 83.6%|
 |Power Line Isolation|2500V|
 
 ![perf1.png](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_perf1.png)
