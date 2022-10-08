@@ -53,8 +53,11 @@ The values of the registers CMPASET and CMPBSET determine the length of the resp
 A dead time of $T_{DEAD} = 100ns$ each is sufficient and also corresponds to the values of the SN6505B. According to the data sheet, a switching frequency of $f_{SW} = 400kHz$ is intended for the Würth Elektronik 750315371 transformer. Since the TCD works with a clock frequency of $f_{TCD} = 20MHz$, the following register values are calculated:
 
 $$T_{SW} = \frac{1}{f_{SW}} = \frac{1}{400000Hz} = 2500ns$$
+
 $$T_{ON} = \frac{T_{SW}}{2} - T_{DEAD} = \frac{2500ns}{2} - 100ns = 1150ns$$
+
 $$CMPASET = CMPBSET = T_{DEAD} \times f_{TCD} - 1 = 0.0000001s \times 20000000Hz - 1 = 1$$
+
 $$CMPACLR = CMPBCLR = T_{ON} \times f_{TCD} - 1 = 0.00000115s \times 20000000Hz - 1 = 22$$
 
 The main function of the firmware is thus as follows:
