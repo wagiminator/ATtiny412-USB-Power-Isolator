@@ -22,6 +22,23 @@ Per dot convention the same voltage polarities that occur at the primary also oc
 
 When Q2 conducts, Q1 goes high-impedance and the voltage polarities at the primary and secondary reverse. Now the upper end of the primary presents the open end with a 2×VIN (+10V) potential against ground. In this case D1 is forward biased while D2 is reverse biased and current flows from the upper secondary end through D1, charging the capacitors and returning through the load to the center-tap.
 
+## Transformer Selection
+The choice of a suitable center-tapped transformer essentially depends on the input voltage, the output voltage, the current and the switching frequency.
+
+To prevent a transformer from saturating, its V-t product must be greater than the maximum V-t product applied by the device. The maximum voltage supplied by the device is the nominal input voltage (here $V_{IN} = 5V$) plus 10%. The maximum time ($T_{max}$) during which this voltage is applied to the primary winding is half the period of the switching frequency (here $f_{SW} = 400kHz$). Therefore, the minimum V-t product of the transformer is determined by:
+
+(1) $Vt_{min} = 1.1 \times V_{IN} \times \frac{T_{max}}{2} = \frac{1.1 \times V_{IN}}{2 \times f_{SW}} = \frac{5.5V}{800kHz} = 6.875Vμs$
+
+Common V-t values ​​for low-power, center-tapped transformers range from 22 Vμs to 150 Vμs in typical 10mm x 12mm footprints. However, transformers specifically designed for PCMCIA applications only deliver 11 Vμs and have a significantly reduced footprint of just 6mm x 6mm. According to the data sheet, the WE750315371 transformer used here has a V-t product of 8.6Vμs for bipolar operation.
+
+Although V-t-wise all of these transformers can be driven by the device, other important factors such as isolation voltage, transformer rating and turns ratio must be considered before making the final decision. To calculate the turns ratio of the transformer, the efficiency of the transformer, the desired output voltage, the voltage drop at the diodes and the MOSFETs as well as the dropout voltage of the linear regulator that may be connected downstream are important.
+
+The 1N5817 Schottky diodes used here have a voltage drop of $V_F = 450mV$, the AO3400A MOSFETs have an on-resistance of $R_{DS(ON)} = 32mΩ$ and the desired output voltage is $V_{OUT} = 5V$. Now the minimum turns ratio $n_{min}$ of the transformer can be calculated that will allow the push-pull converter to operate correctly over the specified current range (here $I_{max} = 1A$). This minimum turns ratio is expressed as the ratio of minimum secondary to minimum primary voltage multiplied by a correction factor that takes into account the typical 97% transformer efficiency ($η = 0.97$):
+
+(2) $n_{min} = \frac{1}{η} \times \frac{V_{OUT} + V_F}{V_{IN} - R_{DS(ON)} \times I_{max} = \frac{1}{0.97} \times \frac{5V + 0.45V}{5V - 0.032Ω \times 1A} = 1.13$
+
+The WE750315371 transformer used here has a turns ratio of 1.1 (±2%), so that fits.
+
 ## PCB Implementations
 Two PCB implementations are available. The first outputs unregulated 5V via a female USB socket and can be easily plugged in between the USB power adapter and the consumer. The second can be used as a split power supply with +5V and -5V.
 
@@ -54,13 +71,13 @@ The values of the registers CMPASET and CMPBSET determine the length of the resp
 
 A dead time of $T_{DEAD} = 100ns$ each is sufficient and also corresponds to the values of the SN6505B. According to the data sheet, a switching frequency of $f_{SW} = 400kHz$ is intended for the Würth Elektronik 750315371 transformer. Since the TCD works with a clock frequency of $f_{TCD} = 20MHz$, the following register values are calculated:
 
-(1) $T_{SW} = \frac{1}{f_{SW}} = \frac{1}{400000Hz} = 2500ns$
+(3) $T_{SW} = \frac{1}{f_{SW}} = \frac{1}{400000Hz} = 2500ns$
 
-(2) $T_{ON} = \frac{T_{SW}}{2} - T_{DEAD} = \frac{2500ns}{2} - 100ns = 1150ns$
+(4) $T_{ON} = \frac{T_{SW}}{2} - T_{DEAD} = \frac{2500ns}{2} - 100ns = 1150ns$
 
-(3) $CMPASET = CMPBSET = T_{DEAD} \times f_{TCD} - 1 = 0.0000001s \times 20000000Hz - 1 = 1$
+(5) $CMPASET = CMPBSET = T_{DEAD} \times f_{TCD} - 1 = 0.0000001s \times 20000000Hz - 1 = 1$
 
-(4) $CMPACLR = CMPBCLR = T_{ON} \times f_{TCD} - 1 = 0.00000115s \times 20000000Hz - 1 = 22$
+(6) $CMPACLR = CMPBCLR = T_{ON} \times f_{TCD} - 1 = 0.00000115s \times 20000000Hz - 1 = 22$
 
 The main function of the firmware is thus as follows:
 
