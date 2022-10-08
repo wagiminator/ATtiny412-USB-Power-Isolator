@@ -1,8 +1,6 @@
 # USB Power Isolator
 For some applications, a galvanically isolated power supply is required to avoid ground loops or short circuits, or simply for mutual protection. The USB Power Isolator offers the possibility of a simple isolation (2.5kV) of the 5V rail of a USB power adapter with an unregulated output and a maximum continuous current of 1A. The USB Power Isolator isolates the power rail only, for full isolation including data lines take a look at the [ADuM3160 USB Isolator](https://github.com/wagiminator/ADuM3160-USB-Isolator).
 
-- Design Files (EasyEDA): 
-
 ![pic1.jpg](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_pic1.jpg)
 
 # Hardware
@@ -30,9 +28,13 @@ Two PCB implementations are available. The first outputs unregulated 5V via a fe
 ### USB-A Pass-Through
 ![pic4.jpg](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_pic4.jpg)
 
+- Design Files (EasyEDA): https://oshwlab.com/wagiminator/attiny412-5v-isolated-dc-dc-converter
+
 ### ±5V Split Power Supply
 ![split_wiring2.png](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Split_Power_Isolator_wiring2.png)
 ![split_pic2.jpg](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Split_Power_Isolator_pic2.jpg)
+
+- Design Files (EasyEDA): https://oshwlab.com/wagiminator/attiny412-5v-isolated-dual-supply
 
 # Software
 ## Creating the Driving Signals
