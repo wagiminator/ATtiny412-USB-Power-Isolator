@@ -44,6 +44,9 @@ An N-channel MOSFET with a gate threshold voltage $V_{GS(th)}$ significantly low
 
 When choosing the diodes, Schottky diodes with the lowest possible forward voltage $V_F$ should be chosen in order to achieve high efficiency. The maximum forward current $I_F$ of the diode should be at least as high as the maximum current $(I_{max})$ that the device is designed to deliver.
 
+## Optional Downstream Voltage Regulator (LDO)
+The USB Power Isolator has an unregulated output, which means that the output voltage depends significantly on the input voltage and the current drawn. In order to stabilize the output voltage, a linear voltage regulator can be connected downstream if required. A voltage regulator with the lowest possible dropout voltage should be selected in order to increase overall efficiency. In addition, it should be able to supply the required maximum current. Note that if a voltage regulator is connected downstream, a different turns ratio of the transformer must be selected according to the formula shown above, so that the dropout voltage can be compensated.
+
 ## PCB Implementations
 Two PCB implementations are available. The first outputs unregulated 5V via a female USB socket and can be easily plugged in between the USB power adapter and the consumer. The second can be used as a split power supply with +5V and -5V.
 
