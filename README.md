@@ -40,9 +40,9 @@ $$n_{min} = \frac{1}{η} \times \frac{V_{OUT} + V_F + V_{DO}}{V_{IN} - R_{DS(ON)
 The WE750315371 transformer used here has a turns ratio of 1.1 (±2%), so that fits.
 
 ## MOSFET and Diode Selection
-An N-channel MOSFET with a gate threshold voltage $V_{GS(th)}$ significantly lower than 5V must be selected. A low on-resistance $R_{DS(ON)}$ improves efficiency. In addition, the continuous drain current $I_D$ must be greater than the maximum current that the device should deliver.
+An N-channel MOSFET with a gate threshold voltage $V_{GS(th)}$ significantly lower than 5V must be selected. A low on-resistance $R_{DS(ON)}$ improves efficiency. In addition, the continuous drain current $I_D$ must be greater than the maximum current $(I_{max})$ that the device should deliver.
 
-When choosing the diodes, Schottky diodes with the lowest possible forward voltage $V_F$ should be chosen in order to achieve high efficiency. The maximum forward current $I_F$ of the diode should be at least as high as the maximum current that the device is designed to deliver.
+When choosing the diodes, Schottky diodes with the lowest possible forward voltage $V_F$ should be chosen in order to achieve high efficiency. The maximum forward current $I_F$ of the diode should be at least as high as the maximum current $(I_{max})$ that the device is designed to deliver.
 
 ## PCB Implementations
 Two PCB implementations are available. The first outputs unregulated 5V via a female USB socket and can be easily plugged in between the USB power adapter and the consumer. The second can be used as a split power supply with +5V and -5V.
