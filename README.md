@@ -25,19 +25,24 @@ When Q2 conducts, Q1 goes high-impedance and the voltage polarities at the prima
 ## Transformer Selection
 The choice of a suitable center-tapped transformer essentially depends on the input voltage, the output voltage, the current and the switching frequency.
 
-To prevent a transformer from saturating, its V-t product must be greater than the maximum V-t product applied by the device. The maximum voltage supplied by the device is the nominal input voltage (here $V_{IN} = 5V$) plus 10%. The maximum time $T_{max}$ during which this voltage is applied to the primary winding is half the period of the switching frequency (here $f_{SW} = 400kHz$). Therefore, the minimum V-t product of the transformer is determined by:
+To prevent a transformer from saturating, its voltage-time product (V-t product) must be greater than the maximum V-t product applied by the device. The maximum voltage supplied by the device is the nominal input voltage (here $V_{IN} = 5V$) plus 10%. The maximum time during which this voltage is applied to the primary winding is half the switching period $T_{SW}/2$, which can be derived from the switching frequency (here $f_{SW} = 400kHz$). Therefore, the minimum V-t product of the transformer is determined by:
 
-$$Vt_{min} = 1.1 \times V_{IN} \times \frac{T_{max}}{2} = \frac{1.1 \times V_{IN}}{2 \times f_{SW}} = \frac{5.5V}{800kHz} = 6.875Vμs$$
+$$Vt_{min} = 1.1 \times V_{IN} \times \frac{T_{SW}}{2} = \frac{1.1 \times V_{IN}}{2 \times f_{SW}} = \frac{5.5V}{800kHz} = 6.875Vμs$$
 
-Common V-t values ​​for low-power, center-tapped transformers range from 22 Vμs to 150 Vμs in typical 10mm x 12mm footprints. However, transformers specifically designed for PCMCIA applications only deliver 11 Vμs and have a significantly reduced footprint of just 6mm x 6mm. According to the data sheet, the WE750315371 transformer used here has a V-t product of 8.6Vμs for bipolar operation.
+Common V-t values ​​for low-power, center-tapped transformers range from 22 Vμs to 150 Vμs in typical 10mm x 12mm footprints. However, transformers specifically designed for PCMCIA applications only deliver 11 Vμs and have a significantly reduced footprint of just 6mm x 6mm. According to the data sheet, the WE750315371 transformer used here has a V-t product of 8.6Vμs for bipolar operation. Since the switching frequency can be changed in software, transformers with other V-t values can also be used.
 
 Although V-t-wise all of these transformers can be driven by the device, other important factors such as isolation voltage, transformer rating and turns ratio must be considered before making the final decision. To calculate the turns ratio of the transformer, the efficiency of the transformer, the desired output voltage, the voltage drop at the diodes and the MOSFETs as well as the dropout voltage of the linear regulator that may be connected downstream are important.
 
-The 1N5817 Schottky diodes used here have a voltage drop of $V_F = 450mV$, the AO3400A MOSFETs have an on-resistance of $R_{DS(ON)} = 32mΩ$ and the desired output voltage is $V_{OUT} = 5V$. Since no downstream linear regulator (LDO) is installed here, a dropout voltage of $V_{DO} = 0V$ is assumed. Now the minimum turns ratio $n_{min}$ of the transformer can be calculated that will allow the push-pull converter to operate correctly over the specified current range (here $I_{max} = 1A$). This minimum turns ratio is expressed as the ratio of minimum secondary to minimum primary voltage multiplied by a correction factor that takes into account the typical 97% transformer efficiency $η = 0.97$:
+The 1N5817 Schottky diodes used here have a forward voltage of $V_F = 450mV$, the AO3400A MOSFETs have a maximum on-resistance of $R_{DS(ON)} = 32mΩ$ at 5V gate-source voltage (which is applied by the ATtiny) and the desired output voltage is $V_{OUT} = 5V$. Since no downstream linear regulator (LDO) is installed here, a dropout voltage of $V_{DO} = 0V$ is assumed. Now the minimum turns ratio $n_{min}$ of the transformer can be calculated that will allow the push-pull converter to operate correctly over the specified current range (here $I_{max} = 1A$). This minimum turns ratio is expressed as the ratio of minimum secondary to minimum primary voltage multiplied by a correction factor that takes into account the typical 97% transformer efficiency $η = 0.97$:
 
 $$n_{min} = \frac{1}{η} \times \frac{V_{OUT} + V_F + V_{DO}}{V_{IN} - R_{DS(ON)} \times I_{max}} = \frac{1}{0.97} \times \frac{5V + 0.45V + 0V}{5V - 0.032Ω \times 1A} = 1.13$$
 
 The WE750315371 transformer used here has a turns ratio of 1.1 (±2%), so that fits.
+
+## MOSFET and Diode Selection
+An N-channel MOSFET with a gate threshold voltage $V_{GS(th)}$ significantly lower than 5V must be selected. A low on-resistance $R_{DS(ON)}$ improves efficiency. In addition, the continuous drain current $I_D$ must be greater than the maximum current that the device should deliver.
+
+When choosing the diodes, Schottky diodes with the lowest possible forward voltage $V_F$ should be chosen in order to achieve high efficiency. The maximum forward current $I_F$ of the diode should be at least as high as the maximum current that the device is designed to deliver.
 
 ## PCB Implementations
 Two PCB implementations are available. The first outputs unregulated 5V via a female USB socket and can be easily plugged in between the USB power adapter and the consumer. The second can be used as a split power supply with +5V and -5V.
@@ -69,11 +74,15 @@ In Four Ramp mode, the TCD cycle follows this pattern:
 
 The values of the registers CMPASET and CMPBSET determine the length of the respective dead times, registers CMPACLR and CMPBCLR the on times of WOA and WOB, respectively. Both dead times and both on times must be the same in each case so that an imbalance in the magnetic flux density swing is avoided and the transformer does not creep into the saturation region.
 
-A dead time of $T_{DEAD} = 100ns$ each is sufficient and also corresponds to the values of the SN6505B. According to the data sheet, a switching frequency of $f_{SW} = 400kHz$ is intended for the Würth Elektronik 750315371 transformer. Since the TCD works with a clock frequency of $f_{TCD} = 20MHz$, the following register values are calculated:
+A dead time of $T_{DEAD} = 100ns$ each is sufficient for the MOSFETs used here and this also corresponds to the values of the SN6505B. If a different MOSFET is used, this value may need to be adjusted. The associated data sheet provides information about delay, rise and fall times, which must be considered here. According to the data sheet of the Würth Elektronik 750315371, a switching frequency of $f_{SW} = 400kHz$ is intended for this transformer. The length of a switching period (and thus the duration of a complete TCD cycle) can be calculated as follows:
 
 $$T_{SW} = \frac{1}{f_{SW}} = \frac{1}{400000Hz} = 2500ns$$
 
+The length of the on times can be calculated from the length of the switching period and the length of the dead times:
+
 $$T_{ON} = \frac{T_{SW}}{2} - T_{DEAD} = \frac{2500ns}{2} - 100ns = 1150ns$$
+
+Since the TCD works with a clock frequency of $f_{TCD} = 20MHz$, the following register values are calculated:
 
 $$CMPASET = CMPBSET = T_{DEAD} \times f_{TCD} - 1 = 0.0000001s \times 20000000Hz - 1 = 1$$
 
