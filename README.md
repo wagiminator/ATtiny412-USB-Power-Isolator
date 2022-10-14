@@ -29,7 +29,7 @@ To prevent a transformer from saturating, its voltage-time product (V-t product)
 
 $$Vt_{min} = 1.1 \times V_{IN} \times \frac{T_{SW}}{2} = \frac{1.1 \times V_{IN}}{2 \times f_{SW}} = \frac{5.5V}{800kHz} = 6.875Vμs$$
 
-Common V-t values ​​for low-power, center-tapped transformers range from 22 Vμs to 150 Vμs in typical 10mm x 12mm footprints. However, transformers specifically designed for PCMCIA applications only deliver 11 Vμs and have a significantly reduced footprint of just 6mm x 6mm. According to the data sheet, the WE750315371 transformer used here has a V-t product of 8.6Vμs for bipolar operation. Since the switching frequency can be changed in software, transformers with other V-t values can also be used.
+Common V-t values ​​for low-power, center-tapped transformers range from 22Vμs to 150Vμs in typical 10mm x 12mm footprints. However, transformers specifically designed for PCMCIA applications only deliver 11Vμs and have a significantly reduced footprint of just 6mm x 6mm. According to the data sheet, the WE750315371 transformer used here has a V-t product of 8.6Vμs for bipolar operation. Since the switching frequency can be changed in software, transformers with other V-t values can also be used.
 
 Although V-t-wise all of these transformers can be driven by the device, other important factors such as isolation voltage, transformer rating and turns ratio must be considered before making the final decision. To calculate the turns ratio of the transformer, the efficiency of the transformer, the desired output voltage, the voltage drop at the diodes and the MOSFETs as well as the dropout voltage of the linear regulator that may be connected downstream are important.
 
@@ -48,11 +48,13 @@ When choosing the diodes, Schottky diodes with the lowest possible forward volta
 The USB Power Isolator has an unregulated output, which means that the output voltage depends significantly on the input voltage and the current drawn. In order to stabilize the output voltage, a linear voltage regulator can be connected downstream if required. A voltage regulator with the lowest possible dropout voltage $V_{DO}$ should be selected in order to increase overall efficiency. In addition, its current drive capability should slightly exceed the maximum load current of the application $I_{max}$ to prevent the LDO from dropping out of regulation. Note that if a voltage regulator is connected downstream, a different turns ratio of the transformer must be selected according to the formula shown above, so that the dropout voltage can be compensated.
 
 ## Optional Downstream L-C Low-Pass Filter
-Switching converters cause ripple at the output voltage due to their functional principle. The output capacitors C3 - C5 smooth this out somewhat, but by no means completely. A much clearer smoothing can be achieved by a downstream L-C low-pass filter, which consists of an inductor and a capacitor. It is important to ensure that the inductor can withstand the maximum output current $I_{max}$ and that the cut-off frequency of the filter $f_{cutoff}$ is orders of magnitude below the switching frequency of the transformer $f_{SW}$. The cut-off frequency depending on the inductance of the coil and the capacitance of the capacitor can be calculated as follows:
-
-$$f_{cutoff} = \frac{1}{2\times\pi\times\sqrt{L \times C}}$$
+Switching converters cause ripple at the output voltage due to their functional principle. The output capacitors C3 - C5 smooth this out somewhat, but by no means completely. A much clearer smoothing can be achieved by a downstream L-C low-pass filter, which consists of an inductor and a capacitor. 
 
 ![wiring2.png](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_wiring2.png)
+
+It is important to ensure that the inductor can withstand the maximum output current $I_{max}$ and that the cut-off frequency of the filter $f_{cutoff}$ is orders of magnitude below the switching frequency of the transformer $f_{SW}$. The cut-off frequency depending on the inductance of the coil (e.g. $L = 10µH$) and the capacitance of the capacitor (e.g. C = 10µF$) can be calculated as follows:
+
+$$f_{cutoff} = \frac{1}{2\times\pi\times\sqrt{L \times C}} = \frac{1}{2\times\pi\times\sqrt{0.00001H \times 0.00001F}} = 15.9kHz$$
 
 ## PCB Implementations
 Two PCB implementations are available. The first outputs unregulated 5V via a female USB socket and can be easily plugged in between the USB power adapter and the consumer. The second can be used as a split power supply with +5V and -5V.
