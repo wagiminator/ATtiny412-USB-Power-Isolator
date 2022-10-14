@@ -56,6 +56,8 @@ It is important to ensure that the inductor can withstand the maximum output cur
 
 $$f_{cutoff} = \frac{1}{2\times\pi\times\sqrt{L \times C}} = \frac{1}{2\times\pi\times\sqrt{0.00001H \times 0.00001F}} = 15.9kHz$$
 
+The lower the cut-off frequency of the filter, the better its ripple reduction effect. This can be achieved with a larger inductance and/or a larger capacitance.
+
 ## PCB Implementations
 Two PCB implementations are available. The first outputs unregulated 5V via a female USB socket and can be easily plugged in between the USB power adapter and the consumer. The second can be used as a split power supply with +5V and -5V.
 
