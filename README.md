@@ -50,7 +50,7 @@ The USB Power Isolator has an unregulated output, which means that the output vo
 ## Optional Downstream L-C Low-Pass Filter
 Switching converters cause ripple at the output voltage due to their functional principle. The output capacitors C3 - C5 smooth this out somewhat, but by no means completely. A much clearer smoothing can be achieved by a downstream L-C low-pass filter, which consists of an inductor and a capacitor. 
 
-![wiring2.png](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_wiring2.png)
+![wiring3.png](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_wiring3.png)
 
 It is important to ensure that the inductor can withstand the maximum output current $I_{max}$ and that the cut-off frequency of the filter $f_{cutoff}$ is orders of magnitude below the switching frequency of the transformer $f_{SW}$. The cut-off frequency depending on the inductance of the coil (e.g. $L = 10µH$) and the capacitance of the capacitor (e.g. C = 10µF$) can be calculated as follows:
 
