@@ -161,6 +161,7 @@ int main(void) {
 
 ![perf1.png](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_perf1.png)
 ![scope1.jpg](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_scope1.jpg)
+![scope4.jpg](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_scope4.jpg)
 ![scope2.jpg](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_scope2.jpg)
 ![scope3.jpg](https://raw.githubusercontent.com/wagiminator/ATtiny412-USB-Power-Isolator/main/documentation/USB_Power_Isolator_scope3.jpg)
 
